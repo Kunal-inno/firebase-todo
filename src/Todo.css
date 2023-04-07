@@ -1,0 +1,62 @@
+.header{
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3%;
+}
+.main-div{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+.top-card{
+    border: 1px solid black;
+    margin-top: 3%;
+    box-shadow: 3px 3px 15px 1px rgb(199 199 199);
+}
+.input-div{
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+input{
+    width: 70%;
+    border-radius: 8%;
+    border: 0.5px solid rgb(20, 17, 17);
+    height: 3vh;
+}
+.second-card{
+    border: 1px solid black;
+    margin-top: 10%;
+    box-shadow: 3px 3px 15px 1px rgb(199 199 199);
+}
+.list-area{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.delete-btn{
+    background-color: red;
+    color: white;
+    border: 1px;
+    border-radius: 10%;
+}
+.update-btn{
+    background-color: green;
+    color: white;
+    border: 1px;
+    border-radius: 10%;
+}
+.add-btn{
+    background-color: rgb(93, 93, 218);
+    color: white;
+    border: 1px;
+    border-radius: 10%;
+    width: 25%;
+}
+.sp{
+    /* display: flex; */
+    justify-content: space-between;
+    /* align-items: center; */
+}
