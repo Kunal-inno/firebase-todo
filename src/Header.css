@@ -1,0 +1,45 @@
+.input-card{
+    border: 1px solid black;
+    margin-top: 3%;
+    box-shadow: 3px 3px 15px 1px rgb(199 199 199);
+}
+.input-div{
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.enter-todo-input{
+    width: 40%;
+    border-radius: 8%;
+    border: 0.5px solid rgb(0, 0, 0);
+    height: 3vh;
+}
+.add-btn{
+    background-color: rgb(93, 93, 218);
+    color: white;
+    border: 1px;
+    height: 4vh;
+    border-radius: 5%;
+    width: 20%;
+}
+.main-div{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+.error {
+    border: 1px solid red;
+}
+.hide-todo{
+    display: none;
+}
+.loader-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loader{
+    height: 70px;
+    width: 70px;
+    color: rgb(121, 121, 222);
+}

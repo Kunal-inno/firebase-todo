@@ -1,37 +1,54 @@
-.header{
-    /* border: 1px solid black; */
+.header {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 3%;
 }
-.main-div{
+
+.main-div {
     margin-left: 25%;
     margin-right: 25%;
 }
-.show-list-card{
-    border: 1px solid black;
+
+.show-list-card {
     margin-top: 10%;
-    box-shadow: 3px 3px 15px 1px rgb(199 199 199);
 }
-.list-area{
+
+.list-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-left: 10%;
     margin-right: 10%;
+    margin-bottom: 3%;
 }
-.delete-btn{
+
+.delete-btn {
     color: red;
     font-size: xx-large;
 }
-.update-btn{
+
+.update-btn {
     color: green;
     font-size: xx-large;
 }
-.not-completed{
+
+.not-completed {
     color: red;
+    font-weight: 800;
 }
-.completed{
+
+.completed {
     color: green;
+    font-weight: 800;
+}
+
+.row-todo {
+    background-color: rgb(229 200 255);
+    display: flex;
+    padding: 1%;
+    border-radius: 280px;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2%;
 }
