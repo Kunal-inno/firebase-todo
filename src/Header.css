@@ -1,21 +1,31 @@
-.input-card{
-    border: 1px solid black;
+.input-card {
+    border: 1px solid rgb(247, 239, 239);
     margin-top: 3%;
     box-shadow: 3px 3px 15px 1px rgb(199 199 199);
 }
-.input-div{
+
+.heading {
+    font-weight: 600;
+    color: rgb(121, 121, 222);
+    font-size: 40px;
+    text-shadow: 0px 0px 20px rgb(160, 160, 208);
+}
+
+.input-todo {
     margin-bottom: 3%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.enter-todo-input{
+
+.enter-todo-input {
     width: 40%;
     border-radius: 8%;
     border: 0.5px solid rgb(0, 0, 0);
     height: 3vh;
 }
-.add-btn{
+
+.add-btn {
     background-color: rgb(93, 93, 218);
     color: white;
     border: 1px;
@@ -23,23 +33,34 @@
     border-radius: 5%;
     width: 20%;
 }
-.main-div{
+
+.main-div {
     margin-left: 25%;
     margin-right: 25%;
 }
+
 .error {
     border: 1px solid red;
 }
-.hide-todo{
-    display: none;
-}
-.loader-div{
+
+.loader-div {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.loader{
+
+.loader {
     height: 70px;
     width: 70px;
     color: rgb(121, 121, 222);
+}
+
+.error {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
 }

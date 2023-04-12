@@ -1,21 +1,25 @@
-.delete-card{
-    border: 1px solid black;
-    margin-top: 3%;
-    box-shadow: 3px 3px 15px 1px rgb(255, 0, 0);
+.delete-card {
+    position: absolute;
+    left: 39%;
+    top: 15%;
 }
-.input-div{
+
+.input-div {
     margin-bottom: 3%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.main-div{
+
+.main-div {
     margin-left: 25%;
     margin-right: 25%;
 }
-.text-yes-no{
+
+.text-yes-no {
     color: blue;
 }
-.popup-heading{
+
+.popup-heading {
     color: red;
 }

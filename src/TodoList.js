@@ -4,10 +4,9 @@ import { db, firebase } from './Firebase.utils.js'
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from './Popup';
-// import { doc, updateDoc } from "firebase/firestore";
 
-const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
-    // const [input, setInput] = useState("")
+const TodoList = ({ inputVal, setInputVal, handleTodoUpdate }) => {
+
     const [todos, setTodos] = useState([])
     const [showPopup, setShowPopup] = useState(false)
 
@@ -16,7 +15,6 @@ const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
         db.collection('todos')
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
-                //    console.log(snapshot)
                 setTodos(snapshot.docs.map(
                     doc => ({
                         id: doc.id,
@@ -28,17 +26,6 @@ const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
                 )
             })
     }, [])
-
-    // for firebase
-    // const addTodo = (e) => {
-    //     e.preventDefault()
-    //     // const myCollection =
-    //     db.collection("todos").add({
-    //         todo: input,
-    //         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    //     })
-    //     setInput("")
-    // }
 
     const handleChangeCheck = (id) => {
         const updatedTodos = todos.map(todo => {
@@ -60,6 +47,7 @@ const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
     const handleShowPopup = () => {
         setShowPopup(!showPopup);
     }
+
     return (
         <>
             <div className='main-div'>
@@ -79,20 +67,7 @@ const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
                                             checked={todo.completed}
                                         />
                                         <h3>{todo.todo}</h3>
-                                        {/* <button 
-                                    className='update-btn' disabled={!input} onClick={() => {
-                                        db.collection('todos').doc(todo.id).update(
-                                            {
-                                                todo: input,
-                                                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                                            },
-                                            {
-                                                merge: true
-                                            }
-                                        )
-                                        setInput("")
-                                    }} 
-                                    >Update</button> */}
+
                                         <AiFillEdit
                                             disabled={!inputVal} onClick={() => {
                                                 db.collection('todos').doc(todo.id).update(
@@ -107,6 +82,7 @@ const TodoList = ({ inputVal, handleTodoUpdate, setInputVal }) => {
                                                 setInputVal("")
                                             }}
                                             className="update-btn" />
+
                                         <MdDelete onClick={(e) => {
                                             handleShowPopup();
                                             db.collection('todos').doc(todo.id).delete();
