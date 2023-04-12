@@ -10,6 +10,8 @@ const Header = () => {
     const [showImage, setShowImage] = useState(false)
     const [errorMessage, setErrorMessage] = useState("");
     const [inputClass, setInputClass] = useState("");
+    const [inputDate, setInputDate] = useState("")
+    const [inputTime, setInputTime] = useState("")
 
     const addTodo = (e) => {
         const inputRegex = /^\s*$/;
@@ -25,6 +27,7 @@ const Header = () => {
             .add({
                 todo: inputVal,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                date: inputDate,
             })
             .then(() => {
                 // Handle success
@@ -37,6 +40,14 @@ const Header = () => {
                 setInputVal("");
             });
     };
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+
 
     return (
         <>
@@ -66,18 +77,35 @@ const Header = () => {
                                 {inputVal.trim() === "" && errorMessage && (
                                     <div className="error-message">{errorMessage}</div>
                                 )}
+                                {(formattedDate < inputDate) ?
+                                    <input type="date" value={inputDate} onChange={(e) => { setInputDate(e.target.value) }} />
+                                    :
+                                    <input type="date" value={null} onChange={(e) => { setInputDate(e.target.value) }} />
+                                }
+                                {/* <p>{(formattedDate < inputDate) ? console.log("yes") : <p>(Date should be greater than current date)</p>}</p> */}
+                                {/* <input type="time" value={inputTime} /> */}
+
                             </form>
-                            <button class="w-3/12 px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border
+                            {(formattedDate < inputDate) ?
+                                <button class="w-3/12 px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border
                             border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent 
                             focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
-                                onClick={() => { addTodo(); }}>
-                                Add
-                            </button>
+                                    onClick={() => { addTodo(); }}>
+                                    Add
+                                </button> :
+                                <button class="w-3/12 px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border
+                            border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent 
+                            focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+                                    disabled
+                                    onClick={() => { addTodo(); }}>
+                                    Add
+                                </button>
+                            }
                         </div>}
                 </div>
             </div>
             <div >
-                <TodoList inputVal={inputVal} setInputVal={setInputVal}></TodoList>
+                <TodoList inputVal={inputVal} setInputVal={setInputVal} inputDate={inputDate}></TodoList>
             </div>
         </>
     )

@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from './Popup';
 
-const TodoList = ({ inputVal, setInputVal, handleTodoUpdate }) => {
+const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
 
     const [todos, setTodos] = useState([])
     const [showPopup, setShowPopup] = useState(false)
@@ -21,6 +21,7 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate }) => {
                         todo: doc.data().todo,
                         timestamp: doc.data().timestamp,
                         completed: doc.data().completed || false,
+                        date: doc.data().date,
                     })
                 )
                 )
@@ -67,7 +68,7 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate }) => {
                                             checked={todo.completed}
                                         />
                                         <h3>{todo.todo}</h3>
-
+                                          <h3>{todo.date}</h3>
                                         <AiFillEdit
                                             disabled={!inputVal} onClick={() => {
                                                 db.collection('todos').doc(todo.id).update(
