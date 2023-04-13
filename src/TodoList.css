@@ -1,0 +1,71 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3%;
+}
+
+.main-div {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.show-list-card {
+    margin-top: 10%;
+}
+
+.list-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 3%;
+}
+
+.delete-btn {
+    color: red;
+    font-size: xx-large;
+}
+
+.update-btn {
+    color: green;
+    font-size: xx-large;
+}
+
+.not-completed {
+    color: red;
+    font-weight: 800;
+}
+
+.completed {
+    color: green;
+    font-weight: 800;
+}
+
+.row-todo {
+    background-color: rgb(229 200 255);
+    display: flex;
+    padding: 1%;
+    border-radius: 280px;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2%;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

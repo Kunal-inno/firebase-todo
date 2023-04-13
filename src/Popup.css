@@ -1,0 +1,25 @@
+.delete-card {
+    position: absolute;
+    left: 39%;
+    top: 15%;
+}
+
+.input-div {
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.main-div {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.text-yes-no {
+    color: blue;
+}
+
+.popup-heading {
+    color: red;
+}
