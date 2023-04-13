@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from './Popup';
 
-const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
+const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
 
     const [todos, setTodos] = useState([])
     const [showPopup, setShowPopup] = useState(false)
@@ -22,6 +22,7 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
                         timestamp: doc.data().timestamp,
                         completed: doc.data().completed || false,
                         date: doc.data().date,
+                        time: doc.data().time,
                     })
                 )
                 )
@@ -56,7 +57,58 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
                     showPopup ? <Popup handleShowPopup={handleShowPopup}></Popup> : null
                 }
                 <div className='show-list-card'>
-                    <div >
+                    <table>
+                        <tbody>
+                            {todos.map(todo => (
+                                <tr key={todo.id}>
+                                    <td>
+                                        <input type="checkbox" onChange={() => handleChangeCheck(todo.id)} checked={todo.completed} />
+                                    </td>
+                                    <td>
+                                        <h3>{todo.todo}</h3>
+                                    </td>
+                                    <td>
+                                        <h3>{todo.date}</h3>
+                                    </td>
+                                    <td>
+                                        <h3>{todo.time}</h3>
+                                    </td>
+                                    <td>
+                                        <AiFillEdit
+                                            disabled={!inputVal}
+                                            onClick={() => {
+                                                db.collection('todos').doc(todo.id).update(
+                                                    {
+                                                        todo: inputVal,
+                                                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                                                    },
+                                                    {
+                                                        merge: true
+                                                    }
+                                                )
+                                                setInputVal("")
+                                            }}
+                                            className="update-btn"
+                                        />
+                                    </td>
+                                    <td>
+                                        <MdDelete
+                                            onClick={(e) => {
+                                                handleShowPopup();
+                                                db.collection('todos').doc(todo.id).delete();
+                                            }}
+                                            className="delete-btn"
+                                        />
+                                    </td>
+                                    <td>
+                                        {todo.completed ? <h3 className='completed'>Completed</h3> : <h3 className='not-completed'>Not Completed</h3>}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    {/* <div >
                         {
                             todos.map(todo => {
                                 return <div key={todo.id}>
@@ -68,7 +120,8 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
                                             checked={todo.completed}
                                         />
                                         <h3>{todo.todo}</h3>
-                                          <h3>{todo.date}</h3>
+                                        <h3>{todo.date}</h3>
+                                        <h3>{todo.time}</h3>
                                         <AiFillEdit
                                             disabled={!inputVal} onClick={() => {
                                                 db.collection('todos').doc(todo.id).update(
@@ -97,7 +150,7 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate,inputDate }) => {
                                 </div>
                             })
                         }
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
