@@ -3,6 +3,12 @@ import { db, firebase } from './Firebase.utils.js'
 import "./Header.css"
 import { TbLoader } from "react-icons/tb";
 import TodoList from './TodoList.js';
+import DatePicker from 'react-date-picker';
+import 'react-calendar/dist/Calendar.css';
+import 'react-date-picker/dist/DatePicker.css';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 
 const Header = () => {
 
@@ -11,9 +17,26 @@ const Header = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [dateMessage, setDateMessage] = useState("")
     const [inputClass, setInputClass] = useState("");
-    const [inputDate, setInputDate] = useState("")
-    const [inputTime, setInputTime] = useState("")
+    const [inputDate, setInputDate] = useState(null)
+    const [inputTime, setInputTime] = useState(null)
     const [timeMessage, setTimeMessage] = useState("")
+    const [startDate, setStartDate] = useState(new Date());
+    const [value, onChange] = useState(new Date());
+
+
+    const minDate = new Date();
+    // Create a new Date object with the original date string
+    const originalDate = new Date(inputDate);
+
+    // Get the year, month, and day from the original date object
+    const year1 = originalDate.getFullYear();
+    const month1 = ("0" + (originalDate.getMonth() + 1)).slice(-2);
+    const day1 = ("0" + originalDate.getDate()).slice(-2);
+
+    // Concatenate the year, month, and day strings with dashes to form the new date string
+    const newDateString = `${year1}-${month1}-${day1}`;
+
+    console.log("mlm", newDateString);
 
     const addTodo = (e) => {
         const inputRegex = /^\s*$/;
@@ -24,22 +47,13 @@ const Header = () => {
             return;
         }
 
-        if (formattedDate <= inputDate) {
-            console.log("yes");
-        } else {
-            // setErrorMessage("Date should be greater than current date");
-            setDateMessage("Date should be greater than current date")
-            setInputClass("border-red-500");
-            return;
-        }
-
         setShowImage(true);
 
         db.collection("todos")
             .add({
                 todo: inputVal,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                date: inputDate,
+                date: inputDate.toISOString().substring(0, 10),
                 time: inputTime,
             })
             .then(() => {
@@ -63,8 +77,15 @@ const Header = () => {
     const day = String(date.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
+    console.log("gvg", inputDate)
+
+
     const now = new Date();
     const currentTime = now.toLocaleTimeString();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const nowTime = (hours + ":" + minutes);
+    console.log("hhh", nowTime)
 
     return (
         <>
@@ -95,20 +116,13 @@ const Header = () => {
                                 {inputVal.trim() === "" && errorMessage && (
                                     <div className="error-message ">{errorMessage}</div>
                                 )}
-                                {(formattedDate <= inputDate) ?
-                                    <input type="date" value={inputDate} onChange={(e) => { setInputDate(e.target.value) }} />
-                                 
-                                    :
-                                    <input type="date" value={null} onChange={(e) => { setInputDate(e.target.value) }} />
-                                }
+                                <div className='date-div' >
+                                    <DatePicker value={inputDate} onChange={(date) => { setInputDate(date) }} minDate={minDate} format="yyy/MM/dd" />
+                                </div>
 
-                                <p className='error-message'>{(formattedDate <= inputDate) ? console.log("yes") : <>{dateMessage}</>}</p>
-                                <input type="time" value={inputTime} onChange={(e) => { setInputTime(e.target.value) }} />
-                                {/* <p className='error-message'>{(formattedDate && currentTime) ?  <>{timeMessage}</> :null}</p> */}
-                                {
-                                    ((formattedDate == inputDate) && (inputTime < currentTime) ?
-                                        <p className='error-message time-input'>Enter valid time</p> : null)
-                                }
+                                <div className='time-div' >
+                                    <TimePicker onChange={setInputTime} value={inputTime} />
+                                </div>
                             </form>
                             <button class="w-3/12 px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border
                             border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent 

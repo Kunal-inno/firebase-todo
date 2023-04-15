@@ -43,6 +43,14 @@
     border: 1px solid red;
 }
 
+.date-div {
+    margin-top: 3%;
+}
+
+.time-div {
+    margin-top: 3%;
+}
+
 .loader-div {
     display: flex;
     align-items: center;
@@ -67,4 +75,35 @@
 
 .input-area {
     width: 130%;
+}
+
+input[type="date"] {
+    margin-top: 10px;
+    padding: 5px;
+    width: 130%;
+    border: 0;
+    background: linear-gradient(150deg, #69306D, #d3bcc0);
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    font-weight: 350px;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 0px 30px 38px -20px #000;
+}
+
+input[type="time"] {
+    padding: 5px;
+    border: 0;
+    width: 130%;
+    background: linear-gradient(150deg, #69306D, #d3bcc0);
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    font-weight: 350px;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    box-shadow: 0px 30px 38px -20px #000;
 }

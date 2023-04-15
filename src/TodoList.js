@@ -107,50 +107,6 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
                             ))}
                         </tbody>
                     </table>
-
-                    {/* <div >
-                        {
-                            todos.map(todo => {
-                                return <div key={todo.id}>
-                                    <div className='row-todo'>
-
-                                        <input
-                                            type="checkbox"
-                                            onChange={() => handleChangeCheck(todo.id)}
-                                            checked={todo.completed}
-                                        />
-                                        <h3>{todo.todo}</h3>
-                                        <h3>{todo.date}</h3>
-                                        <h3>{todo.time}</h3>
-                                        <AiFillEdit
-                                            disabled={!inputVal} onClick={() => {
-                                                db.collection('todos').doc(todo.id).update(
-                                                    {
-                                                        todo: inputVal,
-                                                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                                                    },
-                                                    {
-                                                        merge: true
-                                                    }
-                                                )
-                                                setInputVal("")
-                                            }}
-                                            className="update-btn" />
-
-                                        <MdDelete onClick={(e) => {
-                                            handleShowPopup();
-                                            db.collection('todos').doc(todo.id).delete();
-                                        }}
-                                            className="delete-btn" />
-                                        {todo.completed ?
-                                            <h3 className='completed'>Completed</h3>
-                                            :
-                                            <h3 className='not-completed'>Not Completed</h3>}
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div> */}
                 </div>
             </div>
         </>
