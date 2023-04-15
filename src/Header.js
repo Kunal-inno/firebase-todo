@@ -10,6 +10,7 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 
+
 const Header = () => {
 
     const [inputVal, setInputVal] = useState("")
@@ -94,6 +95,7 @@ const Header = () => {
                     <div className='header'>
                         <h3 className='heading'>Add your todo</h3>
                     </div>
+                   
                     {showImage ?
                         <div className='loader-div'>
                             <TbLoader className='loader' />

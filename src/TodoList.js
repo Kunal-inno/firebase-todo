@@ -4,11 +4,17 @@ import { db, firebase } from './Firebase.utils.js'
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from './Popup';
+import Dropdown from './Dropdown.js';
 
 const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
 
     const [todos, setTodos] = useState([])
     const [showPopup, setShowPopup] = useState(false)
+    const [filter, setFilter] = useState("");
+    const [showAll, setShowAll] =useState(Boolean)
+    const [showCompleted,sertShowComplted]=useState(Boolean)
+    const [showIncomplete, setIncompleted]=useState(Boolean)
+
 
     //getting data from firebase
     useEffect(() => {
@@ -46,15 +52,65 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
         });
     };
 
+    // const completedTodos = todos.filter(todo => todo.completed === true);
+    // console.log("compl", completedTodos)
+    // const incompleteTodos = todos.filter(todo => todo.completed === false);
+    // console.log("not-compl", incompleteTodos)
+
+    const completedTodos = todos.filter(todo => todo.completed === true);
+    const incompleteTodos = todos.filter(todo => todo.completed === false);
+    const allTodos = todos;
+
+    // const showAll = () => {
+    //     setTodos([...allTodos]);
+    // }
+
+    // const showCompleted = () => {
+    //     setTodos([todos,...completedTodos]);
+    // }
+
+    // const showIncomplete = () => {
+    //     setTodos([todos,...incompleteTodos]);
+    // }
+
+    const handleCompletedTodo=()=>{
+           setFilter(completedTodos)
+
+    }
+    const handleAllTodo=()=>{
+        setFilter(allTodos)
+        
+    }
+    const handleIncompletedTodo=()=>{
+        setFilter(incompleteTodos)
+    }
+     
+
+
+
+
     const handleShowPopup = () => {
         setShowPopup(!showPopup);
     }
 
     return (
         <>
+            {/* <button onClick={() => setFilter("completed")}>Completed</button>
+            <button onClick={() => setFilter("incomplete")}>Incomplete</button>
+            <button onClick={() => setFilter("all")}>All</button> */}
+            <button onClick={handleAllTodo}>All</button>
+            <button onClick={handleCompletedTodo}>Completed</button>
+            <button onClick={handleIncompletedTodo}>Incomplete</button>
+
+
             <div className='main-div'>
                 {
                     showPopup ? <Popup handleShowPopup={handleShowPopup}></Popup> : null
+                }
+                {
+                    <div className='drop-down'>
+                        <Dropdown />
+                    </div>
                 }
                 <div className='show-list-card'>
                     <table>

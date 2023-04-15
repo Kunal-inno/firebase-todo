@@ -52,12 +52,14 @@
     align-items: center;
     margin-top: 2%;
 }
+
 table {
     border-collapse: collapse;
     width: 100%;
 }
 
-th, td {
+th,
+td {
     text-align: left;
     padding: 8px;
 }
@@ -68,4 +70,9 @@ th {
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+.drop-down {
+    position: absolute;
+    top: 37%;
 }
