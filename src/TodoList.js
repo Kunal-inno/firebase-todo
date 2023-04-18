@@ -5,15 +5,17 @@ import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from './Popup';
 import Dropdown from './Dropdown.js';
+import { AiOutlineCaretUp } from "react-icons/ai";
+import { AiOutlineCaretDown } from "react-icons/ai";
 
 const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
 
     const [todos, setTodos] = useState([])
     const [showPopup, setShowPopup] = useState(false)
-    const [filter, setFilter] = useState("");
-    const [showAll, setShowAll] =useState(Boolean)
-    const [showCompleted,sertShowComplted]=useState(Boolean)
-    const [showIncomplete, setIncompleted]=useState(Boolean)
+    const [filter, setFilter] = useState([...todos]);
+    const [showAll, setShowAll] = useState(Boolean)
+    const [showCompleted, setShowCompleted] = useState(Boolean)
+    const [showIncomplete, setShowIncomplete] = useState(Boolean)
 
 
     //getting data from firebase
@@ -52,73 +54,85 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
         });
     };
 
-    // const completedTodos = todos.filter(todo => todo.completed === true);
-    // console.log("compl", completedTodos)
-    // const incompleteTodos = todos.filter(todo => todo.completed === false);
-    // console.log("not-compl", incompleteTodos)
-
-    const completedTodos = todos.filter(todo => todo.completed === true);
-    const incompleteTodos = todos.filter(todo => todo.completed === false);
-    const allTodos = todos;
-
-    // const showAll = () => {
-    //     setTodos([...allTodos]);
-    // }
-
-    // const showCompleted = () => {
-    //     setTodos([todos,...completedTodos]);
-    // }
-
-    // const showIncomplete = () => {
-    //     setTodos([todos,...incompleteTodos]);
-    // }
-
-    const handleCompletedTodo=()=>{
-           setFilter(completedTodos)
-
+    const handleAllTodo = () => {
+        setShowCompleted(false)
+        setShowIncomplete(false)
     }
-    const handleAllTodo=()=>{
-        setFilter(allTodos)
-        
-    }
-    const handleIncompletedTodo=()=>{
-        setFilter(incompleteTodos)
-    }
-     
 
+    const handleCompletedTodo = () => {
+        setShowCompleted(true);
+        setShowIncomplete(false);
+    };
 
+    const handleIncompletedTodo = () => {
+        setShowCompleted(false);
+        setShowIncomplete(true);
+    };
+
+    const filteredTodos = showCompleted
+        ? todos.filter(todo => todo.completed)
+        : showIncomplete
+            ? todos.filter(todo => !todo.completed)
+            : todos;
 
 
     const handleShowPopup = () => {
         setShowPopup(!showPopup);
     }
 
+    const sortTodosByDateAsc = () => {
+        const sortedTodos = [...todos].sort((a, b) => {
+            return new Date(a.date + " " + a.time) - new Date(b.date + " " + b.time);
+        });
+        setTodos(sortedTodos);
+    };
+
+    const sortTodosByDateDesc = () => {
+        const sortedTodos = [...todos].sort((a, b) => {
+            return new Date(b.date + " " + b.time) - new Date(a.date + " " + a.time);
+        });
+        setTodos(sortedTodos);
+    };
+
     return (
         <>
-            {/* <button onClick={() => setFilter("completed")}>Completed</button>
-            <button onClick={() => setFilter("incomplete")}>Incomplete</button>
-            <button onClick={() => setFilter("all")}>All</button> */}
-            <button onClick={handleAllTodo}>All</button>
-            <button onClick={handleCompletedTodo}>Completed</button>
-            <button onClick={handleIncompletedTodo}>Incomplete</button>
-
-
             <div className='main-div'>
                 {
                     showPopup ? <Popup handleShowPopup={handleShowPopup}></Popup> : null
                 }
                 {
                     <div className='drop-down'>
-                        <Dropdown />
+                        <Dropdown
+                            handleAllTodo={handleAllTodo}
+                            handleCompletedTodo={handleCompletedTodo}
+                            handleIncompletedTodo={handleIncompletedTodo} />
                     </div>
                 }
+
                 <div className='show-list-card'>
                     <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Todo</th>
+                                <th className='sort-date'>Date
+                                    <div className='sort-arrow'>
+                                        <AiOutlineCaretUp onClick={sortTodosByDateAsc}></AiOutlineCaretUp>
+                                        <AiOutlineCaretDown onClick={sortTodosByDateDesc}></AiOutlineCaretDown>
+                                    </div>
+                                </th>
+                                <th>Time</th>
+                                <th></th>
+                                <th></th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            {todos.map(todo => (
+                            {filteredTodos.map(todo => (
                                 <tr key={todo.id}>
                                     <td>
-                                        <input type="checkbox" onChange={() => handleChangeCheck(todo.id)} checked={todo.completed} />
+                                        <input type="checkbox" onChange={() => handleChangeCheck(todo.id)} checked={todo.completed}
+                                        />
                                     </td>
                                     <td>
                                         <h3>{todo.todo}</h3>
@@ -133,19 +147,22 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
                                         <AiFillEdit
                                             disabled={!inputVal}
                                             onClick={() => {
-                                                db.collection('todos').doc(todo.id).update(
-                                                    {
-                                                        todo: inputVal,
-                                                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                                                    },
-                                                    {
-                                                        merge: true
-                                                    }
-                                                )
-                                                setInputVal("")
+                                                if (inputVal.trim() !== "") { // check if inputVal is not empty or only contains whitespace
+                                                    db.collection('todos').doc(todo.id).update(
+                                                        {
+                                                            todo: inputVal,
+                                                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                                                        },
+                                                        {
+                                                            merge: true
+                                                        }
+                                                    )
+                                                    setInputVal("")
+                                                }
                                             }}
                                             className="update-btn"
                                         />
+
                                     </td>
                                     <td>
                                         <MdDelete
@@ -157,7 +174,9 @@ const TodoList = ({ inputVal, setInputVal, handleTodoUpdate, inputDate }) => {
                                         />
                                     </td>
                                     <td>
-                                        {todo.completed ? <h3 className='completed'>Completed</h3> : <h3 className='not-completed'>Not Completed</h3>}
+                                        {todo.completed ? <h3 className='completed'>Completed</h3>
+                                            :
+                                            <h3 className='not-completed'>Not Completed</h3>}
                                     </td>
                                 </tr>
                             ))}

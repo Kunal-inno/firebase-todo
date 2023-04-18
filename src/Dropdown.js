@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Dropdown() {
+function Dropdown({ handleAllTodo, handleCompletedTodo, handleIncompletedTodo }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -10,14 +10,16 @@ function Dropdown() {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false);
+    // setIsOpen(false);
+    setIsOpen(!isOpen)
   };
 
   return (
     <div className="relative">
       <button
         type="button"
-        className="inline-flex items-center justify-center w-full px-4 py-2 font-medium text-white bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        className="inline-flex items-center justify-center w-full px-4 py-2 font-medium text-white 
+        bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         onClick={toggleDropdown}
       >
         {selectedOption || "Options"}
@@ -30,7 +32,8 @@ function Dropdown() {
         >
           <path
             fillRule="evenodd"
-            d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+            d="M6.293 6.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 
+            1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
             clipRule="evenodd"
           />
         </svg>
@@ -42,14 +45,21 @@ function Dropdown() {
             <button
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
-              onClick={() => handleOptionClick("Completed")}
+              onClick={() => { handleAllTodo(); handleOptionClick() }}
+            >
+              All
+            </button>
+            <button
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              role="menuitem"
+              onClick={() => { handleCompletedTodo(); handleOptionClick() }}
             >
               Completed
             </button>
             <button
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
-              onClick={() => handleOptionClick("Not Completed")}
+              onClick={() => { handleIncompletedTodo(); handleOptionClick() }}
             >
               Not Completed
             </button>

@@ -21,9 +21,7 @@ const Header = () => {
     const [inputDate, setInputDate] = useState(null)
     const [inputTime, setInputTime] = useState(null)
     const [timeMessage, setTimeMessage] = useState("")
-    const [startDate, setStartDate] = useState(new Date());
-    const [value, onChange] = useState(new Date());
-
+    const [dateError, setDateError] = useState(false);
 
     const minDate = new Date();
     // Create a new Date object with the original date string
@@ -48,6 +46,17 @@ const Header = () => {
             return;
         }
 
+        const dateRegex = /^\s*(\d{1,2}\/\d{1,2}\/\d{4})?\s*$/;
+
+        if (!inputDate || !dateRegex.test(inputDate.toLocaleDateString())) {
+            setDateError(true);
+            setDateMessage("Please enter a valid date.");
+            return;
+        } else {
+            setDateError(false);
+            setDateMessage("");
+        }
+
         setShowImage(true);
 
         db.collection("todos")
@@ -68,6 +77,7 @@ const Header = () => {
                 setInputVal("");
                 setDateMessage("");
                 setErrorMessage("");
+                // setDateError("")
                 setTimeMessage("");
             });
     };
@@ -95,7 +105,7 @@ const Header = () => {
                     <div className='header'>
                         <h3 className='heading'>Add your todo</h3>
                     </div>
-                   
+
                     {showImage ?
                         <div className='loader-div'>
                             <TbLoader className='loader' />
@@ -118,9 +128,14 @@ const Header = () => {
                                 {inputVal.trim() === "" && errorMessage && (
                                     <div className="error-message ">{errorMessage}</div>
                                 )}
+
                                 <div className='date-div' >
-                                    <DatePicker value={inputDate} onChange={(date) => { setInputDate(date) }} minDate={minDate} format="yyy/MM/dd" />
+                                    <DatePicker value={inputDate} onChange={(date) => { setInputDate(date) }}
+                                        minDate={minDate} format="yyy/MM/dd" />
                                 </div>
+                                {
+                                    (dateError) ? <div className="error-message ">{dateMessage}</div> : null
+                                }
 
                                 <div className='time-div' >
                                     <TimePicker onChange={setInputTime} value={inputTime} />
@@ -136,7 +151,8 @@ const Header = () => {
                 </div>
             </div>
             <div >
-                <TodoList inputVal={inputVal} inputTime={inputTime} setInputVal={setInputVal} inputDate={inputDate}></TodoList>
+                <TodoList inputVal={inputVal} inputTime={inputTime} setInputVal={setInputVal} inputDate={inputDate}>
+                </TodoList>
             </div>
         </>
     )

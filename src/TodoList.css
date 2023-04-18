@@ -74,5 +74,13 @@ tr:nth-child(even) {
 
 .drop-down {
     position: absolute;
-    top: 37%;
+    top: 39%;
+}
+
+.sort-date {
+    display: flex;
+}
+
+.sort-arrow {
+    margin-left: 25%;
 }
